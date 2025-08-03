@@ -1,0 +1,4 @@
+name: MMCP
+version: '1.0.0'
+main: cz.rispy.mmcp.MMCP
+api-version: '1.21'
