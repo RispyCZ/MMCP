@@ -12,45 +12,53 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 import org.bukkit.plugin.Plugin
 
-class MCPServer(private val bukkitServer: org.bukkit.Server, private val bukkitPlugin: Plugin) {
+class MCPServer(
+    private val bukkitServer: org.bukkit.Server,
+    private val bukkitPlugin: Plugin,
+) {
     fun create(): Server {
-        val server = Server(
-            Implementation(
-                name = "Minecraft Server MCP",
-                version = "1.0.0"
-            ),
-            ServerOptions(
-                capabilities = ServerCapabilities(
-                    tools = ServerCapabilities.Tools(listChanged = true),
-                )
+        val server =
+            Server(
+                Implementation(
+                    name = "Minecraft Server MCP",
+                    version = "1.0.0",
+                ),
+                ServerOptions(
+                    capabilities =
+                        ServerCapabilities(
+                            tools = ServerCapabilities.Tools(listChanged = true),
+                        ),
+                ),
             )
-        )
 
         server.addTool(
             name = "send_command",
-            description = """
+            description =
+                """
                 Send command as console to a minecraft server
-            """.trimIndent(),
-            inputSchema = Tool.Input(
-                properties = buildJsonObject {
-                    putJsonObject("command") {
-                        put("type", "string")
-                        put("description", "Command to be executed")
-                    }
-                }
-            ),
-            handler = { request -> runCommandAsConsole(request, bukkitServer, bukkitPlugin) }
+                """.trimIndent(),
+            inputSchema =
+                Tool.Input(
+                    properties =
+                        buildJsonObject {
+                            putJsonObject("command") {
+                                put("type", "string")
+                                put("description", "Command to be executed")
+                            }
+                        },
+                ),
+            handler = { request -> runCommandAsConsole(request, bukkitServer, bukkitPlugin) },
         )
 
         server.addTool(
             name = "get_logs",
-            description = """
+            description =
+                """
                 Read latest server logs
-            """.trimIndent(),
-            handler = { request -> readServerLog(request, bukkitServer.worldContainer.absolutePath) }
+                """.trimIndent(),
+            handler = { request -> readServerLog(request, bukkitServer.worldContainer.absolutePath) },
         )
 
         return server
     }
 }
-
