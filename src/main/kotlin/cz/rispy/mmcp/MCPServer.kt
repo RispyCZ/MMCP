@@ -1,7 +1,6 @@
 package cz.rispy.mmcp
 
-import cz.rispy.mmcp.tools.readServerLog
-import cz.rispy.mmcp.tools.runCommandAsConsole
+import cz.rispy.mmcp.tools.*
 import io.modelcontextprotocol.kotlin.sdk.Implementation
 import io.modelcontextprotocol.kotlin.sdk.ServerCapabilities
 import io.modelcontextprotocol.kotlin.sdk.Tool
@@ -43,11 +42,67 @@ class MCPServer(private val bukkitServer: org.bukkit.Server, private val bukkitP
         )
 
         server.addTool(
-            name = "get_logs",
+            name = "read_file",
             description = """
-                Read latest server logs
+                Read server file
             """.trimIndent(),
-            handler = { request -> readServerLog(request, bukkitServer.worldContainer.absolutePath) }
+            inputSchema = Tool.Input(
+                properties = buildJsonObject {
+                    putJsonObject("file_path") {
+                        put("type", "string")
+                        put("description", "File path")
+                    }
+                    putJsonObject("lines") {
+                        put("type", "string")
+                        put("description", "Maximum of lines to be read")
+                    }
+                }
+            ),
+            handler = { request -> readServerFile(request) }
+        )
+
+        server.addTool(
+            name = "write_file",
+            description = """
+                Write server file
+            """.trimIndent(),
+            inputSchema = Tool.Input(
+                properties = buildJsonObject {
+                    putJsonObject("file_path") {
+                        put("type", "string")
+                        put("description", "File path")
+                    }
+                    putJsonObject("file_content") {
+                        put("type", "string")
+                        put("description", "Content to write")
+                    }
+                }
+            ),
+            handler = { request -> readServerFile(request) }
+        )
+
+        server.addTool(
+            name = "list_directory",
+            description = """
+                List server directory
+            """.trimIndent(),
+            inputSchema = Tool.Input(
+                properties = buildJsonObject {
+                    putJsonObject("directory_path") {
+                        put("type", "string")
+                        put("description", "Directory path")
+                    }
+                }
+            ),
+            handler = { request -> listDirectory(request) }
+        )
+
+        server.addTool(
+            name = "list_root_directory",
+            description = """
+                List server root directory
+            """.trimIndent(),
+            handler = { request -> listRootDirectory(request) }
         )
 
         return server

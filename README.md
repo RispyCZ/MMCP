@@ -59,20 +59,30 @@ plugin {
 
 ### `read_file`
 Read contents of server files
-- **Parameters:** `path` (string) - File path relative to server directory
+- **Parameters:** `file_path` (string) - File path relative to server directory
 - **Returns:** File contents as text
 
 ### `write_file`
 Write or modify server files
 - **Parameters:**
-    - `path` (string) - File path relative to server directory
-    - `content` (string) - Content to write
+    - `file_path` (string) - File path relative to server directory
+    - `file_content` (string) - Content to write
 - **Returns:** Success confirmation
 
 ### `send_command`
 Execute server console commands
 - **Parameters:** `command` (string) - Command to execute (without /)
-- **Returns:** Command output/result
+- **Returns:** Command true or false (If the command wasn't found)
+
+### `list_directory`
+List any server directory
+- **Parameters:** `directory_path` (string) - Directory path relative to server directory
+- **Returns:** List of directories
+
+### `list_root_directory`
+List root server directory (Current working directory)
+- **Returns:** List of directories
+
 
 ## 🔒 Security Considerations
 - **Authentication:** API key required for all requests
