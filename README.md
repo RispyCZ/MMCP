@@ -1,5 +1,7 @@
 # MMCP (Minecraft MCP)
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/RispyCZ/MMCP?utm_source=oss&utm_medium=github&utm_campaign=RispyCZ%2FMMCP&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 **🚧 Work in Progress - Early Development Stage**
 
 MMCP is a Minecraft plugin that implements the Model Context Protocol (MCP) server, enabling Large Language Models (LLMs) to assist with server administration tasks. This plugin bridges the gap between AI assistants and Minecraft server management, automating boring administrative work.
