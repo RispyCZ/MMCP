@@ -1,0 +1,33 @@
+name: Release new version
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get Commit Data
+        id: commit
+        uses: prompt/actions-commit-hash@v3
+
+      - name: Restore cache artifacts
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            build/libs
+          key: ${{ steps.commit.outputs.short }}
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          generateReleaseNotes: true
+          artifacts: "build/libs/*.jar"
